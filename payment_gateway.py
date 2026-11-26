@@ -1,13 +1,20 @@
 # payment_gateway.py
-# def process_transaction(user_id: str, amount: float, currency: str = "USD") -> dict:
-#     """Critical payment transaction processor."""
-    
-#     if amount <= 0:
-#         raise ValueError("Invalid amount")
-#     return {"status": "SUCCESS", "user_id": user_id, "amount": amount, "currency": currency}
-def process_transaction(user_id: str, total_amount: float) -> dict:
-    return {"status": "SUCCESS", "user_id": user_id}
+
+def process_transaction(user_id: str, amount: float, currency: str = "USD") -> dict:
+    """Critical payment transaction processor with validation."""
+    if amount <= 0:
+        raise ValueError("Invalid amount")
+    return {
+        "status": "SUCCESS", 
+        "user_id": user_id, 
+        "amount": amount, 
+        "currency": currency
+    }
 
 def refund_transaction(transaction_id: str, amount: float) -> dict:
-    """Process customer refund."""
+    """Process customer refund safely."""
     return {"refund_id": f"ref_{transaction_id}", "amount": amount, "status": "REFUNDED"}
+
+def get_supported_currencies() -> list[str]:
+    """Non-breaking safe helper function."""
+    return ["USD", "EUR", "INR", "GBP"]
